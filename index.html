@@ -1,8 +1,39 @@
 <html>
 	<head>
 		<title>BMTC Guide</title>
+		<meta http-equiv=X-UA-Compatible content="IE=edge">
+	    <meta name=description content="BMTC Guide - Provide Users with offline access to Route Information">
+	    <meta name=viewport content="width=device-width, initial-scale=1, user-scalable=no">
+	    <meta name="theme-color" content="#0288d1">
+	    <meta name="msapplication-TileColor" content="#0288d1">
+	    <meta name="msapplication-TileImage" content="/img/Bmtc_logo.png">
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+	    <meta name="apple-mobile-web-app-title" content="BMTC Guide">
+	    <meta name="application-name" content="BMTC Guide">
+	    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:200,300,400,500,700">
+    	<link rel="stylesheet" href="./css/style.css">
 	</head>
 	<body>
+		<!-- TODO: App Shell and App Content -->
+		<div class="app app__layout">
+			<header>
+
+			</header>
+		</div>
+
+		<script type="text/javascript">
+
+			// REGISTER SERVICE WORKER
+			if(navigator.serviceWorker){
+				navigator.serviceWorker.register('./service-worker.js',
+					{scope: './'}).then(function(reg){
+					console.info('[SUCCESS] Service Worker Registration');
+				}).catch(function(err){
+					console.info('[FAILURE] Service Worker Registration: ' + err);
+				});
+			}
 		
+		</script>
 	</body>
 </html>
