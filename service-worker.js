@@ -26,7 +26,7 @@ self.addEventListener('install', function(event){
 			return cache.addAll(filesToCache).then(function(){
 
 				console.info('[SUCCESS] Loading Cache');
-				
+
 				// FORCE SERVICE WORKER TO GO FROM WAITING STATE TO ACTIVE STATE
 				return self.skipWaiting();
 
@@ -56,7 +56,7 @@ self.addEventListener('activate', function(event){
 // FETCH EVENT:
 // TRIGGERED ON EVERY FETCH REQUEST MADE BY 'index.html', POST INSTALL EVENT
 self.addEventListener('fetch', function(event){
-	
+
 	console.info('[SUCCESS] Service Worker Fetching');
 
 	event.respondWith(
@@ -87,7 +87,7 @@ self.addEventListener('fetch', function(event){
 
 		})
 
-		// RULE TO CHECK CACHE 
+		// RULE TO CHECK CACHE
 		// TODO: DEFINE THE RULE TO READ THE DATA FROM CACHE
 	);
 
