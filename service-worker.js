@@ -9,7 +9,22 @@ var cache_name = 'cache_bmtc_v1';
 // TODO: ADD RELEVANT FILES TO THE FOLLOWING ARRAY, TO BE LOADED IN CACHE:
 var filesToCache = [
 	'/',
-	'./index.html'
+	'./index.html',
+	'./routes.html',
+	'./user_journey.html',
+	'./css/',
+	'./css/material_icons_stylesheet.css',
+	'./css/material.css',
+	'./css/material.min.css',
+	'./css/material.min.css.map',
+	'./css/style.css',
+	'./css/stylesheet.css',
+	'./js/',
+	'./js/app.js',
+	'./js/jquery.js',
+	'./js/material.js',
+	'./js/material.min.js',
+	'./js/material.min.js.map'
 ];
 
 // INSTALL EVENT:
@@ -59,36 +74,55 @@ self.addEventListener('fetch', function(event){
 
 	console.info('[SUCCESS] Service Worker Fetching');
 
+	// event.respondWith(
+	//
+	// 	// TODO: DEFINE RULES HERE
+	//
+	// 	// RULE TO CHECK NETWORK FIRST
+	// 	fetch(event.request).then(function(response){
+	//
+	// 		// IF BROKEN LINK (PAGE NOT FOUND)
+	// 		if( response.status === 404 ){
+	//
+	// 			console.info('[RESPONSE FORM NETWORK, CUSTOMIZED BY SERVICE WORKER] Page not found');
+	// 			return new Response('Page Not Found Response');
+	// 		}
+	//
+	// 		// FETCH FROM NETWORK
+	// 		console.info('[RESPONSE FROM NETWORK] Fetch from Network');
+	// 		return response;
+	//
+	// 	}).catch(function(){
+	//
+	// 		// RULE TO SERVE IT OFFLINE, SINCE NETWORK REQUEST FAILED
+	// 		console.info('[RESPONSE OFFLINE] Response from Offline rules');
+	//
+	// 		// RETURN SOMETHING OFFLINE:
+	// 		return new Response('Offline Response');
+	//
+	// 	})
+	//
+	// 	// RULE TO CHECK CACHE
+	// 	// TODO: DEFINE THE RULE TO READ THE DATA FROM CACHE
+	// );
+
+
+	// FETCH THE DATA FROM CACHE:
 	event.respondWith(
 
-		// TODO: DEFINE RULES HERE
+		caches.match(event.request)
+			.then(function(response){
 
-		// RULE TO CHECK NETWORK FIRST
-		fetch(event.request).then(function(response){
+				// CACHE HIT - RETURNING RESPONSE FROM CACHED VERSION
+				if(response){
+					console.log('[FETCH] Returning from Service Worker Cache: ', event.request.url);
+					return response;
+				}
 
-			// IF BROKEN LINK (PAGE NOT FOUND)
-			if( response.status === 404 ){
+				// FETCH FROM NETWORK
+				console.log('[FETCH] Returning from Server: ', event.request.url);
+				return fetch(event.request);
+    })
 
-				console.info('[RESPONSE FORM NETWORK, CUSTOMIZED BY SERVICE WORKER] Page not found');
-				return new Response('Page Not Found Response');
-			}
-
-			// FETCH FROM NETWORK
-			console.info('[RESPONSE FROM NETWORK] Fetch from Network');
-			return response;
-
-		}).catch(function(){
-
-			// RULE TO SERVE IT OFFLINE, SINCE NETWORK REQUEST FAILED
-			console.info('[RESPONSE OFFLINE] Response from Offline rules');
-
-			// RETURN SOMETHING OFFLINE:
-			return new Response('Offline Response');
-
-		})
-
-		// RULE TO CHECK CACHE
-		// TODO: DEFINE THE RULE TO READ THE DATA FROM CACHE
 	);
-
 });
