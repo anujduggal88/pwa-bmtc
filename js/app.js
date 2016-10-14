@@ -40,21 +40,28 @@ var userSelectedSource;
 var userSelectedDestination;
 
 // Get the routes from Web Service:
-function getRoutesNew(url){
-	var request = new XMLHttpRequest();
-	request.open("GET", url, false);
-	request.send(null)
+// function getRoutesNew(url){
+// 	var request = new XMLHttpRequest();
+// 	request.open("GET", url, false);
+// 	request.send(null)
+//
+// 	// PARSE THE JSON OBJECT:
+// 	var my_JSON_object = JSON.parse(request.responseText);
+//
+// 	// LOOP THROUGH JSON OBJECT FOR ROUTE NUMBERS AND PUSH TO ARRAY:
+// 	for (var i=0;i<my_JSON_object.length;i++){
+// 		routeList.push(my_JSON_object[i][1]);
+// 	}
+//
+// 	return (routeList);
+// }
 
-	// PARSE THE JSON OBJECT:
-	var my_JSON_object = JSON.parse(request.responseText);
 
-	// LOOP THROUGH JSON OBJECT FOR ROUTE NUMBERS AND PUSH TO ARRAY:
-	for (var i=0;i<my_JSON_object.length;i++){
-		routeList.push(my_JSON_object[i][1]);
-	}
-
-	return (routeList);
-}
+// function tryFetchFromSW(url){
+// 	console.log('Calling SW fetch');
+// 	.fetch(url);
+// 	console.log('Called SW Fetch');
+// }
 
 // PROCESS THE ROUTE LIST:
 function processRouteList(routeList){
@@ -93,18 +100,25 @@ function btn_GuideMe(){
 	if(userSelectedSource === 'Kempegowda Bus Station' && userSelectedDestination === '1st Block Koramangala'){
 		// Route 1 - Majestic to Koramangala
 		url = 'http://localhost:8080/route1';
+		localStorage["globalURL"] = url;
 	}
 	else if(userSelectedSource === 'Central Silk Board' && userSelectedDestination === 'Electronic City'){
 		// Route 2 - Silk Board to Electronic City
 		url = 'http://localhost:8080/route2';
+		localStorage["globalURL"] = url;
 	}
 	else if(userSelectedSource === 'Central Silk Board' && userSelectedDestination === 'Marathahalli Bridge'){
 		// Route 3 - Silk Board to Marathahalli
 		url = 'http://localhost:8080/route3';
+		localStorage["globalURL"] = url;
 	}
 	else if(userSelectedSource === 'Tin Factory' && userSelectedDestination === 'Marathahalli Bridge'){
+		userSelectedSource = 'TF';
+		userSelectedDestination = 'MB'
+
 		// Route 4 - Tin Factory to Marathahalli
 		url = 'http://localhost:8080/route4';
+		localStorage["globalURL"] = url;
 	}
 	else {
 		// Route doesn't exist for the User's input
@@ -113,7 +127,9 @@ function btn_GuideMe(){
 	}
 
 	// GET THE ROUTES IN ARRAY routeList[]:
-	routeList = getRoutesNew(url);
+	//routeList = getRoutesNew(url);
+
+	//tryFetchFromSW(url);
 
 	// PROCESS ARRAY:
 	routeList_partial = processRouteList(routeList);
@@ -126,7 +142,8 @@ function btn_GuideMe(){
 	localStorage["userDestination"] = userSelectedDestination;//txt_destination.value;
 
 	// Refresh the window:
-	window.location.href="routes.html";
+	//window.location.href="routes.html";
+	window.location.href='routes.html?src='+localStorage["userSource"]+'&des='+localStorage["userDestination"]+"&route";
 }
 
 function init_sub_array(busJourney, start, end){
@@ -235,5 +252,5 @@ function btn_startJourney(){
 	localStorage["userRoute"] = txt_routeno.value;
 	localStorage["userJourney"] = userJourney;
 
-	window.location.href="user_journey.html";
+	window.location.href="user_journey.html?"+routeno+"&userjourney";
 }
